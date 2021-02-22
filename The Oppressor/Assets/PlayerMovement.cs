@@ -7,9 +7,20 @@ public class PlayerMovement : MonoBehaviour
 
     public float speed = 5f;
     float initialSpeed;
-    float groundCheck;
+
     bool isGrounded = false;
     public GameObject Feet;
+    float groundCheck;
+
+    Vector3 velocity;
+
+    public bool AllowGravity = true;
+    public float gravity = -9.81f;
+
+    float jumpForce = 5f;
+
+    public CharacterController CC;
+
 
     // Start is called before the first frame update
     void Start()
@@ -22,11 +33,9 @@ public class PlayerMovement : MonoBehaviour
     {
         // movement
         if(Input.GetKey(KeyCode.LeftControl)) {
-            print("slower");
             speed = initialSpeed - 2f;
         }
         else if(Input.GetKey(KeyCode.LeftShift)) {
-            print("faster");
             speed = initialSpeed + 3.5f;
         }
         else {
@@ -38,16 +47,29 @@ public class PlayerMovement : MonoBehaviour
         float VerticalMovement = Input.GetAxisRaw("Vertical");
 
         Vector3 move = transform.right * HorizontalMovement + transform.forward * VerticalMovement;
-        transform.position += move * Time.deltaTime * speed;
+        CC.Move(move * Time.deltaTime * speed);
+
+        //jump
+
+        if(Input.GetButtonDown("Jump") && isGrounded)
+        {
+            velocity.y = Mathf.Sqrt(jumpForce * gravity);
+        }
 
         //gravity
         int Ground = 1 << 9;
-        Ground = ~Ground;
 
-        isGrounded = Physics.Raycast(Feet.transform.position, transform.TransformDirection(Vector3.down), 0.1f, Ground);
-        if(!isGrounded)
+        isGrounded = Physics.CheckSphere(Feet.transform.position, 0.4f, Ground);
+        if(isGrounded && AllowGravity && velocity.y < 0)
         {
-            //
+            velocity.y = 0f;
         }
+
+        if(AllowGravity && !isGrounded) {
+        velocity.y -= gravity * Time.deltaTime;}
+        print(jumpForce * -2f * gravity);
+        print(velocity);
+        transform.position += velocity * Time.deltaTime;
+
     }
 }
