@@ -67,8 +67,6 @@ public class PlayerMovement : MonoBehaviour
 
         if(AllowGravity && !isGrounded) {
         velocity.y -= gravity * Time.deltaTime;}
-        print(jumpForce * -2f * gravity);
-        print(velocity);
         transform.position += velocity * Time.deltaTime;
 
     }
