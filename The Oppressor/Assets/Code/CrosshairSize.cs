@@ -16,7 +16,6 @@ public class CrosshairSize : MonoBehaviour
     {
         rt = gameObject.GetComponent<RectTransform>();
         rt.sizeDelta = new Vector2(defaultSize, defaultSize);
-        print(rt.sizeDelta);
     }
 
     void Update()
@@ -24,7 +23,6 @@ public class CrosshairSize : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.P)) {
             float sizeto = Random.Range(80, 150);
             IncreaseSize(sizeto);
-        print(sizeto);
         }
     }
 
@@ -33,7 +31,6 @@ public class CrosshairSize : MonoBehaviour
         if(rt == null) {
             rt = gameObject.GetComponent<RectTransform>();
         }
-        print(sizeto + "ok");
 
         StartCoroutine(Sizing(rt.sizeDelta.x, sizeto, 5f));
     }
@@ -47,10 +44,6 @@ public class CrosshairSize : MonoBehaviour
             
             yield return new WaitForFixedUpdate();
             StartCoroutine(Sizing(startSize, endsize, speed));
-        }
-        else {
-            print("ab");
-
         }
     }
 }

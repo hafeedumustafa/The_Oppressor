@@ -15,7 +15,7 @@ public class PlayerMovement : MonoBehaviour
     Vector3 velocity;
 
     public bool AllowGravity = true;
-    public float gravity = -9.81f;
+    public const float gravity = -9.81f;
 
     float jumpForce = 5f;
 
@@ -52,9 +52,7 @@ public class PlayerMovement : MonoBehaviour
         //jump
 
         if(Input.GetButtonDown("Jump") && isGrounded)
-        {
-            velocity.y = Mathf.Sqrt(jumpForce * gravity);
-        }
+            velocity.y = Mathf.Sqrt(jumpForce * -1 * gravity);
 
         //gravity
         int Ground = 1 << 9;
@@ -66,7 +64,7 @@ public class PlayerMovement : MonoBehaviour
         }
 
         if(AllowGravity && !isGrounded) {
-        velocity.y -= gravity * Time.deltaTime;}
+        velocity.y += gravity * Time.deltaTime;}
         transform.position += velocity * Time.deltaTime;
 
     }
