@@ -7,9 +7,9 @@ public class CrosshairSize : MonoBehaviour
 {
     
     RectTransform rt;
-    [Range(60, 200)]
+    [Range(20, 200)]
     public float size;
-    [Range(60, 200)]
+    [Range(20, 200)]
     public float defaultSize;
 
     void Start()
